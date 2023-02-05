@@ -1,0 +1,67 @@
+/*
+ * Mixins Gerais do SASS
+ */
+
+/**
+ * Mixin to write media queries
+ */
+
+ @mixin respond-to($breakpoint1, $breakpoint2) {
+    @if map-has-key($map: $mediaQueries, $key: $breakpoint1) and
+        map-has-key($map: $mediaQueries, $key: $breakpoint2)
+    {
+        @media #{"(min-width:" inspect(map-get($mediaQueries, $breakpoint1))")"} and #{"(max-width:" inspect(map-get($mediaQueries, $breakpoint2))")"} {
+            @content;
+        }
+        @debug "min-with:#{inspect(map-get($mediaQueries, $breakpoint1))} and #{inspect(map-get($mediaQueries, $breakpoint2))}";
+    } @else {
+        @warn "No breakpoint #{$breakpoint1} or #{$breakpoint2} found. Breakpoints available: #{map-keys($mediaQueries)}.";
+    }
+}
+//EXAMPLE
+//@include respond-to-max("sm") {}
+//OUTPUT
+//@media (max-wdith: 576px) {}
+
+@mixin respond-to-min($breakpoint) {
+    @if map-has-key($map: $mediaQueries, $key: $breakpoint) {
+        @media #{"(min-width:" inspect(map-get($mediaQueries, $breakpoint))")"} {
+            @content;
+        }
+    } @else {
+        @warn "No breakpoint #{$breakpoint} found. Breakpoints available: #{map-keys($mediaQueries)}.";
+    }
+}
+//EXAMPLE
+//@include respond-to("md", "lg") {}
+//OUTPUT
+//@media (min-width: 768px) and (max-wdith: 992px) {}
+@mixin respond-to-max($breakpoint) {
+    @if map-has-key($map: $mediaQueries, $key: $breakpoint) {
+        @media #{"(max-width:" inspect(map-get($mediaQueries, $breakpoint))")"} {
+            @content;
+        }
+    } @else {
+        @warn "No breakpoint #{$breakpoint} found. Breakpoints available: #{map-keys($mediaQueries)}.";
+    }
+}
+//EXAMPLE
+//@include respond-to-min("xxl") {}
+//OUTPUT
+//@media (min-wdith: 1400px) {}
+
+/**
+ * Mixin to show elements on only certain queries
+ */
+
+@mixin not-display-on($breakpoint) {
+    @include respond-to-max($breakpoint) {
+        display: none !important;
+    }
+}
+
+@mixin display-only-on($breakpoint) {
+    @include respond-to-min($breakpoint) {
+        display: none !important;
+    }
+}

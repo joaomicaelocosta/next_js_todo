@@ -1,0 +1,30 @@
+//CSS reset to enforce consistency across different browsers
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+    all: unset;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+a[href] {
+    text-decoration: none;
+}
